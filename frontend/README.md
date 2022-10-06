@@ -1,22 +1,42 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
+To get started with this project, clone this repo and follow these commands:
 
-First, run the development server:
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
+  git clone https://github.com/sergio2098/patika-akbank-web3-final-case.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the frontend directory of project
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```bash
+  cd patika-akbank-web3-final-case/frontend
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Install dependencies
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+  npm install
+```
+
+Build the application
+
+```bash
+  npm run build
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+Go to your [http://localhost:3000/](http://localhost:3000/) to check page.
+
+You can start editing the page by modifying `pages/index.js`. If you have own smart contract, just modify `constants.js`.
 
 ## Learn More
 
