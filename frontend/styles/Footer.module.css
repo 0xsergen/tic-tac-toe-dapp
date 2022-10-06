@@ -1,0 +1,7 @@
+.social {
+  display: flex;
+  column-gap: 0.5em;
+  justify-content: center;
+  background: #d2daff;
+  padding: 25px 50px;
+}

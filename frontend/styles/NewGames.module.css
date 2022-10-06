@@ -1,0 +1,14 @@
+.createGame {
+  display: flex;
+  /* justify-content: top; */
+  column-gap: 2em;
+  min-height: 75vh;
+  align-items: top;
+  background-color: #eef1ff;
+  color: #373941;
+  padding: 1em 0 1em 0;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
