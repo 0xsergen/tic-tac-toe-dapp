@@ -90,6 +90,7 @@ export default function TicTacToe(props) {
 
   async function makeMove(_x, _y, _gameId) {
     try {
+      setLoading(true);
       if (address != nextMove) setError("Not your turn!");
       if (board[_x][_y] != "") setError("Not empty cell!");
       if (winner.ID != 0) setError("Game is finished!");
