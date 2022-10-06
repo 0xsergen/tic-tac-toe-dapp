@@ -1,6 +1,4 @@
 import Head from "next/head";
-// import Image from "next/image";
-// import Link from "next/link";
 
 import styles from "../styles/Home.module.css";
 import Navbar from "../components/Navbar";
@@ -19,7 +17,7 @@ export default function Home() {
   const [startedGames, setStartedGames] = useState([]);
   const [availableGames, setAvalailableGames] = useState([]);
   const [endedGames, setEndedGames] = useState([]);
-  const [games, setGames] = useState([]);
+  // const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myGames, setMyGames] = useState([]);
   const [myEndedGames, setMyEndedGames] = useState([]);
@@ -46,9 +44,11 @@ export default function Home() {
       setLoading(true);
       let gamesArray = await gameContract.getGames();
 
-      const startedGames = gamesArray.filter((game) => game.isStarted === true);
-      const endedGames = gamesArray.filter((game) => game.isStarted === false);
-      const availableGames = gamesArray.filter(
+      const _startedGames = gamesArray.filter(
+        (game) => game.isStarted === true
+      );
+      const _endedGames = gamesArray.filter((game) => game.isStarted === false);
+      const _availableGames = gamesArray.filter(
         (game) =>
           game.playerOne != EMPTY_ADDRESS && game.playerTwo == EMPTY_ADDRESS
       );
@@ -69,9 +69,9 @@ export default function Home() {
         setMyEndedGames(playerEndedGames);
         // console.log(address, playerGames, myGames);
       }
-      setAvalailableGames(availableGames);
-      setStartedGames(startedGames);
-      setEndedGames(endedGames);
+      setAvalailableGames(_availableGames);
+      setStartedGames(_startedGames);
+      setEndedGames(_endedGames);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -110,11 +110,14 @@ export default function Home() {
             }
           </div>
 
+          {/* My Active Games */}
           {isConnected && address && myGames.length > 0 && (
             <div className={styles.myGames}>
               {<MyGames data={myGames} address={address} isActive={true} />}
             </div>
           )}
+
+          {/* My Latest Ended Games */}
           {isConnected && address && myEndedGames.length > 0 && (
             <div className={styles.myGames}>
               {
@@ -130,7 +133,13 @@ export default function Home() {
           <div>
             {/* Render the available games */}
             <div className={styles.container}>
-              {!loading && <Games data={availableGames} fetch={fetchGames} />}
+              {
+                <Games
+                  data={availableGames}
+                  fetch={fetchGames}
+                  loadingChanges={setLoading}
+                />
+              }
             </div>
           </div>
         </div>

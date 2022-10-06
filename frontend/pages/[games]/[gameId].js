@@ -8,12 +8,15 @@ import { CONTRACT_ADDRESS, EMPTY_ADDRESS } from "../../constants";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import CreateGame from "../../components/CreateGame";
 import Link from "next/link";
 import Head from "next/head";
 // import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 import { SpinnerInfinity } from "spinners-react";
+
+function shortAddress(_address) {
+  return _address.substring(0, 6) + "..." + _address.slice(-4);
+}
 
 // TicTacToe Module
 export default function TicTacToe(props) {
@@ -71,6 +74,7 @@ export default function TicTacToe(props) {
       })
     );
 
+    // to set datas from BC.
     setCommission(comm.toNumber());
     setPlayerOne(gameInfo.playerOne);
     setPlayerTwo(gameInfo.playerTwo);
@@ -88,6 +92,7 @@ export default function TicTacToe(props) {
     setLoading(false);
   }
 
+  // to make move on board
   async function makeMove(_x, _y, _gameId) {
     try {
       setLoading(true);
@@ -107,14 +112,10 @@ export default function TicTacToe(props) {
 
   function displayTurn() {
     if (nextMove == address) {
-      return "Your turn";
+      return "Your turn " + (address == playerOne ? "(X)" : "O");
     } else {
       return shortAddress(nextMove);
     }
-  }
-
-  function shortAddress(_address) {
-    return _address.substring(0, 6) + "..." + _address.slice(-4);
   }
 
   function displayWinner() {
@@ -155,11 +156,13 @@ export default function TicTacToe(props) {
     }
   }
 
+  // to clear error message after making a successful move
   useEffect(() => {
     // console.log(board);
     setError("");
   }, [board]);
 
+  // if account etc is changed, reload page.
   useEffect(() => {
     if (gameId && signer) {
       Promise.all([fetchGame()]).finally(() => setLoading(false));
@@ -189,7 +192,7 @@ export default function TicTacToe(props) {
           }
         </div>
         {/* <div>{winner.ID != 0 ? <h2>{displayWinner()}</h2> : displayTurn()}</div> */}
-        {isConnected != playerOne && !isStarted && (
+        {!isStarted && (
           <button
             className={styles.button}
             onClick={() => joinGame(gameId, rewardPool)}
@@ -197,39 +200,42 @@ export default function TicTacToe(props) {
             Join
           </button>
         )}
-        <table className={styles.card}>
-          <thead>
-            <tr>
-              <th className={styles.tableCells}>Game ID</th>
-              <th className={styles.tableCells}>
-                {playerTwo == EMPTY_ADDRESS ? "Entry Fee" : "Reward Pool"}
-              </th>
-              <th className={styles.tableCells}>
-                {winner.ID != 0 ? "Winner" : "Next Move"}
-              </th>
-              <th className={styles.tableCells}>P1</th>
-              <th className={styles.tableCells}>P2</th>
-            </tr>
-          </thead>
-          <tbody className={styles.tbody}>
-            <tr key={gameId}>
-              <td className={styles.tableCells}>{gameId}</td>
+        <div>
+          <table className={styles.card}>
+            <thead>
+              <tr>
+                <th className={styles.tableCells}>Game ID</th>
+                <th className={styles.tableCells}>
+                  {playerTwo == EMPTY_ADDRESS ? "Entry Fee" : "Reward Pool"}
+                </th>
+                <th className={styles.tableCells}>
+                  {winner.ID != 0 ? "Winner" : "Next Move"}
+                </th>
+                <th className={styles.tableCells}>P1</th>
+                <th className={styles.tableCells}>P2</th>
+              </tr>
+            </thead>
+            <tbody className={styles.tbody}>
+              <tr key={gameId}>
+                <td className={styles.tableCells}>{gameId}</td>
 
-              <td className={styles.tableCells}>{rewardPool} AVAX</td>
-              <td className={styles.tableCells}>
-                {winner.ID != 0 ? displayWinner() : displayTurn()}
-              </td>
-              <td className={styles.tableCells}>{shortAddress(playerOne)}</td>
-              <td className={styles.tableCells}>
-                {shortAddress(playerTwo) == shortAddress(EMPTY_ADDRESS)
-                  ? "Waiting for P2"
-                  : shortAddress(playerTwo)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                <td className={styles.tableCells}>{rewardPool} AVAX</td>
+                <td className={styles.tableCells}>
+                  {winner.ID != 0 ? displayWinner() : displayTurn()}
+                </td>
+                <td className={styles.tableCells}>{shortAddress(playerOne)}</td>
+                <td className={styles.tableCells}>
+                  {shortAddress(playerTwo) == shortAddress(EMPTY_ADDRESS)
+                    ? "Waiting for P2"
+                    : shortAddress(playerTwo)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <p>{error && error}</p>
+        {/* game board functions */}
         <div className={styles.tictactoe}>
           <div className={styles.col}>
             <span
@@ -293,20 +299,23 @@ export default function TicTacToe(props) {
           </div>
         </div>
         {winner.ID != 0 && (
-          <p>
-            Go to{" "}
-            <Link href="/claim">
-              <a
-                style={{
-                  textDecoration: "underline",
-                  color: "blue",
-                }}
-              >
-                Claim Rewards
-              </a>
-            </Link>{" "}
-            page to claim your whole rewards.
-          </p>
+          <div>
+            {" "}
+            <p>
+              Go to{" "}
+              <Link href="/claim">
+                <a
+                  style={{
+                    textDecoration: "underline",
+                    color: "blue",
+                  }}
+                >
+                  Claim Rewards
+                </a>
+              </Link>{" "}
+              page to claim your whole rewards.
+            </p>
+          </div>
         )}
       </div>
       {winner.ID != 0 && <Confetti />}

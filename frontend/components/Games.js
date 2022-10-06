@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
 import { useAccount, useContract, useProvider, useSigner } from "wagmi";
 import contractJson from "../abis/TicTacToe.json";
-
+import Router from "next/router";
 import styles from "../styles/Games.module.css";
 import { formatEther, parseEther } from "ethers/lib/utils";
-// import Link from "next/link";
+import Link from "next/link";
 import { CONTRACT_ADDRESS } from "../constants";
 
+// to show addresses like 0xabcdef...abcd
+function shortAddress(_address) {
+  return _address.substring(0, 6) + "..." + _address.slice(-4);
+}
+
 export default function Games(props) {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+
+  // to list available games to join
   const gameList = props.data;
+
+  // to define contract sample to interact with
   const contractAbi = contractJson.abi;
   const { data: signer } = useSigner();
   const provider = useProvider();
@@ -23,13 +32,14 @@ export default function Games(props) {
   // Join Game
   async function joinGame(_gameId, _entryFee) {
     try {
-      setLoading(true);
+      props.loadingChanges(true);
       const joinGameTx = await contract.joinGame(_gameId, {
         value: parseEther(_entryFee),
       });
       await joinGameTx.wait();
       props.fetch();
-      setLoading(false);
+      Router.push(`/games/${_gameId}`);
+      props.loadingChanges(false);
     } catch (error) {
       console.log(error);
     }
@@ -54,11 +64,7 @@ export default function Games(props) {
                 <tr key={game.gameId.toString()}>
                   <td>{game.gameId.toString()}</td>
                   <td>{formatEther(game.rewardPool.toString())} AVAX</td>
-                  <td>
-                    {game.playerOne.substring(0, 6) +
-                      "..." +
-                      game.playerOne.slice(-3)}
-                  </td>
+                  <td>{shortAddress(game.playerOne)}</td>
                   <td>
                     <button
                       className={styles.button}

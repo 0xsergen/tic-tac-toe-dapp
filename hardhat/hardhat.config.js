@@ -35,7 +35,6 @@ module.exports = {
     fuji: {
       url: RPC_URL,
       accounts: [PRIVATE_KEY],
-      gasPrice: 225000000000,
     },
   },
   etherscan: {

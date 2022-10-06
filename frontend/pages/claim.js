@@ -9,6 +9,10 @@ import Navbar from "../components/Navbar";
 import Head from "next/head";
 import Footer from "../components/Footer";
 
+function shortAddress(_address) {
+  return _address.substring(0, 6) + "..." + _address.slice(-4);
+}
+
 // TicTacToe Module
 export default function TicTacToe(props) {
   const [loading, setLoading] = useState(false);
@@ -41,10 +45,6 @@ export default function TicTacToe(props) {
     setLoading(false);
   }
 
-  function shortAddress(_address) {
-    return _address.slice(0, 6) + "..." + _address.slice(-3);
-  }
-
   // To fetch game details
   async function handleClaim() {
     // Set loading status to true
@@ -56,8 +56,6 @@ export default function TicTacToe(props) {
       );
       await claimRewardsTx.wait();
       setHash(claimRewardsTx.hash);
-      // Start displaying a button to view the NFT details
-      // setShowCreatedGame(true);
       fetchRewardBalance();
       setIsClaimed(true);
     } catch (error) {
@@ -73,7 +71,7 @@ export default function TicTacToe(props) {
     return result;
   }
 
-  useEffect(() => {}, [balance]);
+  useEffect(() => {}, [balance, isClaimed]);
 
   useEffect(() => {
     if (signer) {

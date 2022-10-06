@@ -1,22 +1,25 @@
-import { useEffect, useState } from "react";
-import { useAccount, useContract, useProvider, useSigner } from "wagmi";
+// import { useEffect, useState } from "react";
+// import { useAccount, useContract, useProvider, useSigner } from "wagmi";
 
 import styles from "../styles/Mygames.module.css";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Link from "next/link";
 import { EMPTY_ADDRESS } from "../constants";
 
+// to show addresses like 0xabcdef...abcd
+function shortAddress(_address) {
+  return _address.substring(0, 6) + "..." + _address.slice(-4);
+}
+
 export default function MyGames(props) {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const gameList = props.data;
   const address = props.address;
 
   function getNextMove(game) {
     if (game.playerTwo == EMPTY_ADDRESS) return "Waiting for P2";
     let resultAddress =
-      address == game.nextMove
-        ? "Your Turn"
-        : game.nextMove.substring(0, 6) + "..." + game.nextMove.slice(-3);
+      address == game.nextMove ? "Your Turn" : shortAddress(game.nextMove);
     return resultAddress;
   }
 
@@ -25,17 +28,13 @@ export default function MyGames(props) {
       if (game.playerOne == address) {
         return "You 🎉";
       } else {
-        return (
-          game.playerOne.substring(0, 6) + "..." + game.playerOne.slice(-3)
-        );
+        return shortAddress(game.playerOne);
       }
     } else if (game.winner == 2) {
       if (game.playerTwo == address) {
         return "You 🎉";
       } else {
-        return (
-          game.playerTwo.substring(0, 6) + "..." + game.playerTwo.slice(-3)
-        );
+        return shortAddress(game.playerTwo);
       }
     } else if (game.winner == 3) return "Draw";
   }
@@ -54,6 +53,7 @@ export default function MyGames(props) {
         <tbody className={styles.tbody}>
           {gameList.map((game, i, arr) => {
             if (arr.length - 3 < i)
+              // to show latest ended games only.
               return (
                 <Link
                   key={game.gameId.toString()}
