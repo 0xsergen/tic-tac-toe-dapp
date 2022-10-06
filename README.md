@@ -52,8 +52,15 @@ Start the server
   npm run start
 ```
 
-Go to your [localhost](http://localhost:3000/) to check page.
+Go to your [http://localhost:3000/](http://localhost:3000/) to check page.
 
+You can start editing the page by modifying `pages/index.js`. If you have own smart contract, just modify `constants.js`.
+If you want to deploy a contract etc, create a `.env`file in `hardhat`folder.
+```env
+  PRIVATE_KEY:"YOUR_KEY"
+  RPC_URL:"RPC_URL" // 
+  API_KEY:"API_KEY_SNOWTRACE" // snowtrace.io is like etherscan of Avalanche.
+```
 
 
 ## Usage and Screenshots
