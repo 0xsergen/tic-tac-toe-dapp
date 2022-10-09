@@ -39,9 +39,6 @@ export default function Games(props) {
   const { data, isError, isLoading } = useBalance({
     addressOrName: address,
   });
-  let mygamee = gameList[0];
-  // let asd = parseEther(Number(mygamee.rewardPool._hex));
-  console.log(Number(data.value._hex));
 
   // Join Game
   async function joinGame(_gameId, _entryFee) {
@@ -80,21 +77,17 @@ export default function Games(props) {
                   <td>{formatEther(game.rewardPool.toString())} AVAX</td>
                   <td>{shortAddress(game.playerOne)}</td>
                   <td>
-                    {Number(data.value._hex) < game.rewardPool._hex ? (
-                      "Not enough balance"
-                    ) : (
-                      <button
-                        className={styles.button}
-                        onClick={() =>
-                          joinGame(
-                            game.gameId.toString(),
-                            formatEther(game.rewardPool.toString())
-                          )
-                        }
-                      >
-                        Join
-                      </button>
-                    )}
+                    <button
+                      className={styles.button}
+                      onClick={() =>
+                        joinGame(
+                          game.gameId.toString(),
+                          formatEther(game.rewardPool.toString())
+                        )
+                      }
+                    >
+                      Join
+                    </button>
                   </td>
                 </tr>
               );
