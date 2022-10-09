@@ -112,7 +112,7 @@ export default function TicTacToe(props) {
 
   function displayTurn() {
     if (nextMove == address) {
-      return "Your turn " + (address == playerOne ? "(X)" : "O");
+      return "Your turn " + (address == playerOne ? "(X)" : "(O)");
     } else {
       return shortAddress(nextMove);
     }
@@ -133,9 +133,10 @@ export default function TicTacToe(props) {
 
   function calculateReward() {
     let reward = "";
-    if (winner == 3) {
-      reward = (rewardPool / 2).toPrecision(3);
-    } else if (winner != 0) {
+    console.log(winner);
+    if (winner.ID == 3) {
+      reward = parseFloat(rewardPool / 2).toPrecision(3);
+    } else if (winner.ID != 0) {
       reward = ((rewardPool * (100 - commission)) / 100).toPrecision(3);
     }
     return reward;

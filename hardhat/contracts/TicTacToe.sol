@@ -22,7 +22,6 @@ contract TicTacToe {
         bool isRewardClaimed;
     }
 
-    mapping(uint => uint) public gameRewardPool; // to store each game's reward pool, gameId => gameBalance
     mapping(address => uint) public balance; // to store each wallet's rewards
 
     // An array of 'Game' structs
@@ -86,7 +85,6 @@ contract TicTacToe {
         game.rewardPool = msg.value;
         game.nextMove = msg.sender;
         games.push(game);
-        gameRewardPool[countGame] = msg.value;
 
         // event
         emit GameStarted(countGame, msg.sender, msg.value);
