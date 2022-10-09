@@ -129,7 +129,7 @@ export default function TicTacToe(props) {
           <div>
             {isClaimed && hash && (
               <a
-                href={`https://testnet.snowtrace.io/tx/${hash}#internal`}
+                href={`https://testnet.snowtrace.io/tx/${hash}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

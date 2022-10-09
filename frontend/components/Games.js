@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
-import { useAccount, useContract, useProvider, useSigner } from "wagmi";
+import {
+  useAccount,
+  useContract,
+  useProvider,
+  useSigner,
+  useBalance,
+} from "wagmi";
 import contractJson from "../abis/TicTacToe.json";
 import Router from "next/router";
 import styles from "../styles/Games.module.css";
-import { formatEther, parseEther } from "ethers/lib/utils";
+import { formatEther, parseEther, BigNumber } from "ethers/lib/utils";
 import Link from "next/link";
 import { CONTRACT_ADDRESS } from "../constants";
 
@@ -28,6 +34,14 @@ export default function Games(props) {
     contractInterface: contractAbi,
     signerOrProvider: signer,
   });
+
+  // fetching AVAX balance of the account
+  const { data, isError, isLoading } = useBalance({
+    addressOrName: address,
+  });
+  let mygamee = gameList[0];
+  // let asd = parseEther(Number(mygamee.rewardPool._hex));
+  console.log(Number(data.value._hex));
 
   // Join Game
   async function joinGame(_gameId, _entryFee) {
@@ -54,7 +68,7 @@ export default function Games(props) {
             <th>Game ID</th>
             <th>Entry Fee</th>
             <th>Player 1</th>
-            <th></th>
+            <th>Join</th>
           </tr>
         </thead>
         <tbody>
@@ -66,17 +80,21 @@ export default function Games(props) {
                   <td>{formatEther(game.rewardPool.toString())} AVAX</td>
                   <td>{shortAddress(game.playerOne)}</td>
                   <td>
-                    <button
-                      className={styles.button}
-                      onClick={() =>
-                        joinGame(
-                          game.gameId.toString(),
-                          formatEther(game.rewardPool.toString())
-                        )
-                      }
-                    >
-                      Join
-                    </button>
+                    {Number(data.value._hex) < game.rewardPool._hex ? (
+                      "Not enough balance"
+                    ) : (
+                      <button
+                        className={styles.button}
+                        onClick={() =>
+                          joinGame(
+                            game.gameId.toString(),
+                            formatEther(game.rewardPool.toString())
+                          )
+                        }
+                      >
+                        Join
+                      </button>
+                    )}
                   </td>
                 </tr>
               );

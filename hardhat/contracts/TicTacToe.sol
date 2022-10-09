@@ -19,7 +19,6 @@ contract TicTacToe {
         address nextMove; // to decide which wallet will play
         Status[3][3] gameBoard; // 3x3 matrix for game table
         Winner winner; // winner with Enum
-        bool isRewardClaimed;
     }
 
     mapping(address => uint) public balance; // to store each wallet's rewards

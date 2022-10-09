@@ -26,7 +26,6 @@ describe("TicTacToe Tests", function () {
   it("create a game, join that game with different account", async () => {
     // Ideally, we'd separate these out so that only 1 assert per "it" block
     // And ideally, we'd make this check everything
-    // const raffleState = (await raffle.getRaffleState()).toString();
     await contractPlayer1.startGame({ value: ethers.utils.parseEther("0.1") });
     await contractPlayer2.joinGame(1, {
       value: ethers.utils.parseEther("0.1"),
@@ -128,6 +127,50 @@ describe("TicTacToe Tests", function () {
     // console.log(gameBoard[1]);
     // console.log(gameBoard[2]);
     assert.equal(game.winner, 3);
+  });
+
+  it("revert tx due to try playing twice", async () => {
+    await contractPlayer1.startGame({ value: ethers.utils.parseEther("0.1") });
+    await contractPlayer2.joinGame(1, {
+      value: ethers.utils.parseEther("0.1"),
+    });
+    await contractPlayer1.makeMove(0, 0, 1);
+    await expect(contractPlayer1.makeMove(1, 1, 1)).to.be.revertedWith(
+      "Not your turn!"
+    );
+    // await expect(contract.call()).to.be.revertedWith("Some revert message");
+  });
+
+  it("revert tx due to select cell that is already played", async () => {
+    await contractPlayer1.startGame({ value: ethers.utils.parseEther("0.1") });
+    await contractPlayer2.joinGame(1, {
+      value: ethers.utils.parseEther("0.1"),
+    });
+    await contractPlayer1.makeMove(0, 0, 1);
+    await expect(contractPlayer2.makeMove(0, 0, 1)).to.be.revertedWith(
+      "Cell is not empty!"
+    );
+    // await expect(contract.call()).to.be.revertedWith("Some revert message");
+  });
+
+  it("revert tx due to try claiming without any reward", async () => {
+    await contractPlayer1.startGame({ value: ethers.utils.parseEther("0.1") });
+    await contractPlayer2.joinGame(1, {
+      value: ethers.utils.parseEther("0.1"),
+    });
+    // await contractPlayer1.makeMove(0, 0, 1);
+    await expect(
+      contractPlayer1.claimRewards(ethers.utils.parseEther("9"))
+    ).to.be.revertedWith("Not enough balance.");
+    // await expect(contract.call()).to.be.revertedWith("Some revert message");
+  });
+
+  it("revert tx due to try withdraw money from contract by normal user", async () => {
+    // await contractPlayer1.makeMove(0, 0, 1);
+    await expect(
+      contractPlayer1.withdraw(ethers.utils.parseEther("9"))
+    ).to.be.revertedWith("Not owner.");
+    // await expect(contract.call()).to.be.revertedWith("Some revert message");
   });
 
   it("balances are updated based on game rewards.", async () => {
@@ -245,6 +288,6 @@ describe("TicTacToe Tests", function () {
     await contractPlayer1.startGame({ value: ethers.utils.parseEther("5") });
 
     const games = await contract.getGames();
-    console.log(games);
+    // console.log(games);
   });
 });
