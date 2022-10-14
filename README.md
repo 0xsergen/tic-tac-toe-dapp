@@ -5,6 +5,7 @@ This decentralized app allows to user create/join and play Tic Tac Toe game. Thi
 - Game is built to run with smart contract which runs on Avalanche Fuji Testnet.
 - Frontend is built to ease interact with smart contracts.
 - To try app, click [here](https://patika-akbank-web3-final-case.vercel.app/).
+- If Fuji Testnet is not added in your wallet (i.e. Metamask), pop-up will be automatically shown to add.
 - If needed some test AVAX on Fuji Testnet, click [here](https://faucet.avax.network/) for Official Avalanche Faucet. 
 - See [Usage and Screenshots](#usage-and-screenshots) for details.
 
