@@ -83,6 +83,6 @@ If you want to deploy a contract etc, create a `.env`file in `hardhat`folder.
 
 
 ## **Contact?**
-[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/sergio_2098)
-[![telegram](https://img.shields.io/badge/telegram-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/sergio_2098)
-[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://sergio2098.showwcase.com/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/0xsergen)
+[![telegram](https://img.shields.io/badge/telegram-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/0xsergen)
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://sergen.showwcase.com/)
