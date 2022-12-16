@@ -26,13 +26,13 @@ To get started with this project, clone this repo and follow these commands:
 Clone the project
 
 ```bash
-  git clone https://github.com/sergio2098/patika-akbank-web3-final-case.git
+  git clone https://github.com/0xsergen/tic-tac-toe-dapp.git
 ```
 
 Go to the frontend directory of project
 
 ```bash
-  cd patika-akbank-web3-final-case/frontend
+  cd tic-tac-toe-dapp/frontend
 ```
 
 Install dependencies
